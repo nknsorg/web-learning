@@ -7,16 +7,14 @@
   <style type="text/css">
     @import url("https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:700");
 
-    *,
-    ::after,
-    ::before {
+    * {
       box-sizing: border-box;
     }
 
     html {
+      /* font-size: 10px; */
       overflow: hidden;
-      font-size: 10px;
-      /* line-height: 1; */
+      /* Pull to Refresh 無効化 */
       /* background: lightblue; */
     }
 
@@ -27,8 +25,8 @@
       height: 100dvh;
       /* Pull to Refresh 無効化 */
       overflow-y: auto;
+      /* Pull to Refresh 無効化 */
       /* background: lightgoldenrodyellow; */
-      font-size: 1.8rem;
     }
 
     body,
@@ -44,9 +42,8 @@
       width: 100%;
       min-width: 320px;
 
-      line-height: 1;
-      font-size: 24px;
-      padding: 4px;
+      font-size: 20px;
+      padding: 8px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -70,7 +67,7 @@
     #topPage,
     #mainPage,
     #resultPage {
-      -display: none;
+      display: none;
       /* background: lightgray; */
     }
 
@@ -136,18 +133,17 @@
       font-weight: bold;
       opacity: 0.9;
       border: 3px solid RoyalBlue;
-      font-size: 2.4rem;
+      font-size: 1.5rem;
     }
 
-    .big6 {
-      font-size: 6.4rem;
+    h1 {
+      font-size: 4rem;
       margin: 0;
       margin-block: 0;
-      line-height: 1;
     }
 
-    .big3 {
-      font-size: 3.2rem;
+    h2 {
+      font-size: 2rem;
       margin: 0;
       margin-block: 0;
     }
@@ -192,17 +188,17 @@
   </header>
   <div>
     <div id="topPage" class="page">
-      <p />
+      <p>
       <details>
-        <summary><div><ruby>足<rt>た</rt>し</ruby><ruby>算<rt>ざん</rt></ruby>レベル1
-          (2〜10を<ruby>使<rt>つか</rt>う</ruby>)</div></summary>
+        <summary><ruby>足<rt>た</rt>し</ruby><ruby>算<rt>ざん</rt></ruby>レベル1(2〜10を<ruby>使<rt>つか</rt>う</ruby>)</summary>
         <div class="flex-w70">
           <div><a id="goPageA1Q20">▶20<ruby>問<rt>もん</rt></ruby></a></div>
           <div><a id="goPageA1Q50">▶50<ruby>問<rt>もん</rt></ruby></a></div>
           <div><a id="goPageA1Q50O">▶50<ruby>問<rt>もん</rt></ruby>👹<ruby>鬼<rt>おに</rt></ruby></a></div>
         </div>
       </details>
-      <p />
+      </p>
+      <p>
       <details>
         <summary><ruby>引<rt>ひ</rt>き</ruby><ruby>算<rt>ざん</rt></ruby>レベル1(2〜10を<ruby>使<rt>つか</rt>う</ruby>)</summary>
         <div class="flex-w70">
@@ -211,7 +207,8 @@
           <div><a id="goPageS1Q50O">▶50<ruby>問<rt>もん</rt></ruby>👹<ruby>鬼<rt>おに</rt></ruby></a></div>
         </div>
       </details>
-      <p />
+      </p>
+      <p>
       <details>
         <summary><ruby>掛<rt>か</rt>け</ruby><ruby>算<rt>ざん</rt></ruby>レベル1(2〜10を<ruby>使<rt>つか</rt>う</ruby>)</summary>
         <div class="flex-w70">
@@ -220,7 +217,8 @@
           <div><a id="goPageM1Q50O">▶50<ruby>問<rt>もん</rt></ruby>👹<ruby>鬼<rt>おに</rt></ruby></a></div>
         </div>
       </details>
-      <p />
+      </p>
+      <p>
       <details>
         <summary><ruby>割<rt>わ</rt>り</ruby><ruby>算<rt>ざん</rt></ruby>レベル1(2〜10を<ruby>使<rt>つか</rt>う</ruby>)</summary>
         <div class="flex-w70">
@@ -229,36 +227,35 @@
           <div><a id="goPageD1Q50O">▶50<ruby>問<rt>もん</rt></ruby>👹<ruby>鬼<rt>おに</rt></ruby></a></div>
         </div>
       </details>
+      </p>
     </div>
     <div id="mainPage" class="page">
       <p id="mainTitle"><ruby>足<rt>た</rt>し</ruby><ruby>算<rt>ざん</rt></ruby>1</p>
       <div class="flex3">
         <div><button class="returnButton">◀<ruby>戻<rt>もど</rt>る</ruby></button></div>
         <div>
-          <div><ruby>残<rt>のこ</rt>り</ruby> <span id="restCount">00</span> <ruby>問<rt>もん</rt></ruby></div>
-          <div class="big3"><span id="timerMinutes">00</span>:<span id="timerSeconds">00</span></div>
+          <div><ruby>残<rt>のこ</rt>り</ruby> <span id="restCount">00</span> <ruby>問<rt>もん</rt>
+            </ruby></div>
+          <h2><span id="timerMinutes">00</span>:<span id="timerSeconds">00</span></h2>
         </div>
         <div><button class="retryButton">やり<ruby>直<rt>なお</rt>す</ruby></button></div>
       </div>
       <input type="number" id="answerInput" value="" placeholder="ここをタップしてスタート">
-      <div id="questionText" class="big6">
-        <span id="questionLeft">0</span>
-        <span id="questionSymbol">+</span>
-        <span id="questionRight">1</span>
-      </div>
+      <h1 id="questionText"><span id="questionLeft">0</span> <span id="questionSymbol">+</span> <span
+          id="questionRight">1</span></h1>
     </div>
     <div id="resultPage" class="page">
       <p><ruby>結<rt>けっ</rt>果<rt>か</rt>発<rt>はっ</rt>表<rt>ぴょう</rt></ruby></p>
       <div class="flex-w110">
         <div>
-          <div class="correct big6">○</div>
-          <p><ruby>正解<rt>せいかい</rt></ruby></p>
-          <div><span class="big3" id="correctCount">00</span><ruby>問<rt>もん</rt></ruby></div>
+          <div><ruby>正解<rt>せいかい</rt></ruby></div>
+          <h1 class="correct">○</h1>
+          <div><span id="correctCount">00</span><ruby>問<rt>もん</rt></ruby></div>
         </div>
         <div>
-          <div class="incorrect big6">×</div>
-          <p><ruby>間違<rt>まちが</rt>い</ruby></p>
-          <div><span class="big3" id="incorrectCount">00</span><ruby>問<rt>もん</rt></ruby></div>
+          <div><ruby>間違<rt>まちが</rt>い</ruby></div>
+          <h1 class="incorrect">×</h1>
+          <div><span id="incorrectCount">00</span><ruby>問<rt>もん</rt></ruby></div>
           <div id="incorrectList"></div>
         </div>
       </div>
