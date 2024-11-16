@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width,
+   initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+  <style type="text/css">
+    @import url("https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:700");
+
+    *,
+    ::after,
+    ::before {
+      box-sizing: border-box;
+    }
+
+    html {
+      overflow: hidden;
+      font-size: 10px;
+      /* line-height: 1; */
+      /* background: lightblue; */
+    }
+
+    body {
+      margin: 0 0;
+      height: 100vh;
+      /* Chrome等dvhに未対応のため */
+      height: 100dvh;
+      /* Pull to Refresh 無効化 */
+      overflow-y: auto;
+      /* background: lightgoldenrodyellow; */
+      font-size: 1.8rem;
+    }
+
+    body,
+    input,
+    button {
+      font-family: "M PLUS Rounded 1c", Meiryo, メイリオ, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color: teal;
+      text-align: center;
+    }
+
+    body>header {
+      height: 48px;
+      width: 100%;
+      min-width: 320px;
+
+      line-height: 1;
+      font-size: 24px;
+      padding: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      /* justify-content: space-between; */
+
+      position: fixed;
+      z-index: 100;
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      background: rgba(240, 240, 240, 0.5);
+
+      &+div {
+        min-width: 320px;
+        max-width: 440px;
+        padding: 48px 4px 4px 4px;
+        /* background: lightcyan; */
+        margin: 0 auto;
+      }
+    }
+
+    #topPage,
+    #mainPage,
+    #resultPage {
+      -display: none;
+      /* background: lightgray; */
+    }
+
+    .flex3 {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      &>div {
+        min-width: 70px;
+      }
+    }
+
+    .flex-w110 {
+      display: flex;
+      justify-content: space-evenly;
+
+      &>div {
+        min-width: 110px;
+      }
+    }
+
+    .flex-w70 {
+      display: flex;
+      justify-content: space-evenly;
+
+      &>div {
+        min-width: 70px;
+      }
+    }
+
+    a {
+      &:hover {
+        cursor: pointer;
+        color: #004040;
+      }
+    }
+
+    button {
+      background: RoyalBlue;
+      color: white;
+      font-weight: bold;
+      opacity: 0.9;
+      border: none;
+      margin: 2px 0;
+      border-radius: 8px;
+      padding: 16px 8px;
+      width: 100%;
+
+      &:hover {
+        opacity: 0.8;
+      }
+
+      &:active {
+        opacity: 1;
+      }
+    }
+
+    input {
+      padding: 16px 4px;
+      width: 100%;
+      border-radius: 8px;
+      font-weight: bold;
+      opacity: 0.9;
+      border: 3px solid RoyalBlue;
+      font-size: 2.4rem;
+    }
+
+    .big6 {
+      font-size: 6.4rem;
+      margin: 0;
+      margin-block: 0;
+      line-height: 1;
+    }
+
+    .big3 {
+      font-size: 3.2rem;
+      margin: 0;
+      margin-block: 0;
+    }
+
+    .correct {
+      color: limegreen;
+    }
+
+    .incorrect {
+      color: red;
+    }
+
+    .fadeOut2 {
+      opacity: 0;
+      animation: fadeOut 0.8s ease 0s 1 backwards;
+    }
+
+    @keyframes fadeOut {
+      0% {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      50% {
+        opacity: 1;
+        transform: translateY(0px);
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-8px);
+      }
+    }
+  </style>
+  <title>算数(さんすう)トレーニング</title>
+</head>
+</head>
+
+<body>
+  <header>
+    <ruby>算<rt>さん</rt>数<rt>すう</rt>トレーニング</ruby>
+  </header>
+  <div>
+    <div id="topPage" class="page">
+      <p />
+      <details>
+        <summary><div><ruby>足<rt>た</rt>し</ruby><ruby>算<rt>ざん</rt></ruby>レベル1
+          (2〜10を<ruby>使<rt>つか</rt>う</ruby>)</div></summary>
+        <div class="flex-w70">
+          <div><a id="goPageA1Q20">▶20<ruby>問<rt>もん</rt></ruby></a></div>
+          <div><a id="goPageA1Q50">▶50<ruby>問<rt>もん</rt></ruby></a></div>
+          <div><a id="goPageA1Q50O">▶50<ruby>問<rt>もん</rt></ruby>👹<ruby>鬼<rt>おに</rt></ruby></a></div>
+        </div>
+      </details>
+      <p />
+      <details>
+        <summary><ruby>引<rt>ひ</rt>き</ruby><ruby>算<rt>ざん</rt></ruby>レベル1(2〜10を<ruby>使<rt>つか</rt>う</ruby>)</summary>
+        <div class="flex-w70">
+          <div><a id="goPageS1Q20">▶20<ruby>問<rt>もん</rt></ruby></a></div>
+          <div><a id="goPageS1Q50">▶50<ruby>問<rt>もん</rt></ruby></a></div>
+          <div><a id="goPageS1Q50O">▶50<ruby>問<rt>もん</rt></ruby>👹<ruby>鬼<rt>おに</rt></ruby></a></div>
+        </div>
+      </details>
+      <p />
+      <details>
+        <summary><ruby>掛<rt>か</rt>け</ruby><ruby>算<rt>ざん</rt></ruby>レベル1(2〜10を<ruby>使<rt>つか</rt>う</ruby>)</summary>
+        <div class="flex-w70">
+          <div><a id="goPageM1Q20">▶20<ruby>問<rt>もん</rt></ruby></a></div>
+          <div><a id="goPageM1Q50">▶50<ruby>問<rt>もん</rt></ruby></a></div>
+          <div><a id="goPageM1Q50O">▶50<ruby>問<rt>もん</rt></ruby>👹<ruby>鬼<rt>おに</rt></ruby></a></div>
+        </div>
+      </details>
+      <p />
+      <details>
+        <summary><ruby>割<rt>わ</rt>り</ruby><ruby>算<rt>ざん</rt></ruby>レベル1(2〜10を<ruby>使<rt>つか</rt>う</ruby>)</summary>
+        <div class="flex-w70">
+          <div><a id="goPageD1Q20">▶20<ruby>問<rt>もん</rt></ruby></a></div>
+          <div><a id="goPageD1Q50">▶50<ruby>問<rt>もん</rt></ruby></a></div>
+          <div><a id="goPageD1Q50O">▶50<ruby>問<rt>もん</rt></ruby>👹<ruby>鬼<rt>おに</rt></ruby></a></div>
+        </div>
+      </details>
+    </div>
+    <div id="mainPage" class="page">
+      <p id="mainTitle"><ruby>足<rt>た</rt>し</ruby><ruby>算<rt>ざん</rt></ruby>1</p>
+      <div class="flex3">
+        <div><button class="returnButton">◀<ruby>戻<rt>もど</rt>る</ruby></button></div>
+        <div>
+          <div><ruby>残<rt>のこ</rt>り</ruby> <span id="restCount">00</span> <ruby>問<rt>もん</rt></ruby></div>
+          <div class="big3"><span id="timerMinutes">00</span>:<span id="timerSeconds">00</span></div>
+        </div>
+        <div><button class="retryButton">やり<ruby>直<rt>なお</rt>す</ruby></button></div>
+      </div>
+      <input type="number" id="answerInput" value="" placeholder="ここをタップしてスタート">
+      <div id="questionText" class="big6">
+        <span id="questionLeft">0</span>
+        <span id="questionSymbol">+</span>
+        <span id="questionRight">1</span>
+      </div>
+    </div>
+    <div id="resultPage" class="page">
+      <p><ruby>結<rt>けっ</rt>果<rt>か</rt>発<rt>はっ</rt>表<rt>ぴょう</rt></ruby></p>
+      <div class="flex-w110">
+        <div>
+          <div class="correct big6">○</div>
+          <p><ruby>正解<rt>せいかい</rt></ruby></p>
+          <div><span class="big3" id="correctCount">00</span><ruby>問<rt>もん</rt></ruby></div>
+        </div>
+        <div>
+          <div class="incorrect big6">×</div>
+          <p><ruby>間違<rt>まちが</rt>い</ruby></p>
+          <div><span class="big3" id="incorrectCount">00</span><ruby>問<rt>もん</rt></ruby></div>
+          <div id="incorrectList"></div>
+        </div>
+      </div>
+      <p>かかった<ruby>時<rt>じ</rt>間<rt>かん</rt></ruby>は
+        <span id="resultMinutes">00</span><ruby>分<rt>ふん</rt></ruby>
+        <span id="resultSeconds">00</span><ruby>秒<rt>びょう</rt></ruby>
+        でした！
+      </p>
+      <div class="flex-w110">
+        <div><button class="returnButton">トップへ<ruby>戻<rt>もど</rt>る</ruby></button></div>
+        <div><button class="retryButton"><ruby>問題<rt>もんだい</rt></ruby>をやり<ruby>直<rt>なお</rt>す</ruby></button></div>
+      </div>
+    </div>
+  </div>
+</body>
+<script>'use strict';
+  (() => {
+    function preventDefault(e) { if (event.touches.length > 1) e.preventDefault() }
+    document.body.addEventListener("dblclick", preventDefault, { passive: false })
+    document.body.addEventListener("touchmove", preventDefault, { passive: false })
+    document.body.addEventListener("touchstart", preventDefault, { passive: false })
+  })()
+</script>
+<script>'use strict';
+  class PairNumberMaker {
+    constructor(inMin1, inMax1) {
+      this.min = inMin1
+      this.max = inMax1
+      this._size = this.max - this.min + 1
+      this._keys = []
+    }
+    get size() { return this._size }
+    get count() { return this._keys.length }
+    _keyToNum(inKey) {
+      let k1 = inKey % this._size
+      let n2 = (inKey - k1) / this._size + this.min
+      return [k1 + this.min, n2]
+    }
+    getNext() {
+      let ss = this._size ** 2 - this.count
+      let key = Math.floor(Math.random() * ss)
+      key += this._keys.filter((v) => v <= key).length
+      this._keys.push(key)
+      return this._keyToNum(key)
+    }
+  }
+  class AddQuestionMaker {
+    constructor(inTitle, inMin = 2, inMax = 10, inSize = 20, inIsFadeOut = true) {
+      this.symbol = "+"
+      this.title = "<ruby>足<rt>た</rt>し</ruby><ruby>算<rt>ざん</rt>" + inTitle
+      this._maker = new PairNumberMaker(inMin, inMax)
+      this.size = Math.min(inSize, this._maker.size ** 2)
+      this.isFadeOut = inIsFadeOut;
+    }
+    reset() {
+      this._maker = new PairNumberMaker(this._maker.min, this._maker.max)
+    }
+    get count() { return this._maker.count }
+    getNext() {
+      let n = this._maker.getNext()
+      return n.concat(n[0] + n[1])
+    }
+  }
+  class SubQuestionMaker {
+    constructor(inTitle, inMin = 2, inMax = 10, inSize = 20, inIsFadeOut = true) {
+      this.symbol = "-"
+      this.title = "<ruby>引<rt>ひ</rt>き</ruby><ruby>算<rt>ざん</rt></ruby>" + inTitle
+      this._maker = new PairNumberMaker(inMin, inMax)
+      this.size = Math.min(inSize, this._maker.size ** 2)
+      this.isFadeOut = inIsFadeOut;
+    }
+    reset() {
+      this._maker = new PairNumberMaker(this._maker.min, this._maker.max)
+    }
+    get count() { return this._maker.count }
+    getNext() {
+      let n = this._maker.getNext()
+      return [n[0] + n[1]].concat(n)
+    }
+  }
+  class MulQuestionMaker {
+    constructor(inTitle, inMin = 2, inMax = 10, inSize = 20, inIsFadeOut = true) {
+      this.symbol = "×"
+      this.title = "<ruby>掛<rt>か</rt>け</ruby><ruby>算<rt>ざん</rt></ruby>" + inTitle
+      this._maker = new PairNumberMaker(inMin, inMax)
+      this.size = Math.min(inSize, this._maker.size ** 2)
+      this.isFadeOut = inIsFadeOut;
+    }
+    reset() {
+      this._maker = new PairNumberMaker(this._maker.min, this._maker.max)
+    }
+    get count() { return this._maker.count }
+    getNext() {
+      let n = this._maker.getNext()
+      return n.concat(n[0] * n[1])
+    }
+  }
+  class DivQuestionMaker {
+    constructor(inTitle, inMin = 2, inMax = 10, inSize = 20, inIsFadeOut = true) {
+      this.symbol = "÷"
+      this.title = "<ruby>割<rt>わ</rt>り</ruby><ruby>算<rt>ざん</rt></ruby>" + inTitle
+      this._maker = new PairNumberMaker(inMin, inMax)
+      this.size = Math.min(inSize, this._maker.size ** 2)
+      this.isFadeOut = inIsFadeOut;
+    }
+    reset() {
+      this._maker = new PairNumberMaker(this._maker.min, this._maker.max)
+    }
+    get count() { return this._maker.count }
+    getNext() {
+      let n = this._maker.getNext()
+      return [n[0] * n[1]].concat(n)
+    }
+  }
+  class MainPage {
+    constructor(inMaker = new AddQuestionMaker(1)) {
+      this._qMaker = inMaker;
+      this._constructor()
+      answerInput.onfocus = (e) => {
+        console.log("answerInput.onfocus")
+        this.start()
+      }
+      answerInput.onkeyup = (e) => {
+        console.log("answerInput.onkeyup")
+        this.answer()
+      }
+      questionText.addEventListener('animationend', (e) => {
+        console.log('questionText:animationend')
+        this._resetFadeOut()
+      })
+    }
+    _constructor() {
+      questionSymbol.innerHTML = this._qMaker.symbol
+      this._answerCount = 0
+      this._incorrectQ = []
+      this.restCount = this.rest
+      mainTitle.innerHTML = this._qMaker.title
+      questionText.style.visibility = "hidden"
+
+      mainPage.style.display = "block"
+      resultPage.style.display = ""
+      // mainPage.style.backgroundColor = "transparent"
+      // resultPage.style.backgroundColor = ""
+    }
+    get rest() { return this._qMaker.size - this._answerCount }
+    reset() {
+      this._qMaker.reset()
+      this._constructor()
+      this._timer?.clear()
+      answerInput.value = ''
+      if (answerInput._placeholder) answerInput.placeholder = answerInput._placeholder
+    }
+    clear() {
+      this._timer?.clear()
+      mainPage.style.display = ""
+      resultPage.style.display = ""
+      // mainPage.style.backgroundColor = ""
+      // resultPage.style.backgroundColor = ""
+    }
+    start() {
+      if (this._isStarted) return;
+      questionText.style.visibility = ""
+      answerInput._placeholder = answerInput.placeholder
+      answerInput.placeholder = ""
+      this._setQuestion()
+      this._timer = new Timer()
+      this._timer.start()
+    }
+    set restCount(val) { restCount.innerHTML = val }
+    _resetFadeOut() {
+      questionText.style.visibility = "hidden"
+      questionText.classList.remove("fadeOut2")
+    }
+    _setFadeOut() {
+      this._resetFadeOut()
+      window.requestAnimationFrame(() =>
+        // window.requestAnimationFrame(() =>
+        questionText.classList.add("fadeOut2"))
+      questionText.style.visibility = ""
+    }
+    _setQuestion() {
+      if (this._qMaker.isFadeOut) this._setFadeOut();
+      let [left, right] = this._currentQ = this._qMaker.getNext()
+      questionLeft.innerHTML = left
+      questionRight.innerHTML = right
+    }
+    get _answer() { return this._currentQ[2] }
+    answer() {
+      if (this._isFinished) return
+      let v = answerInput.value
+      if (v.length < String(this._answer).length) return
+      answerInput.value = ''
+      this._answerCount++
+      this.restCount = this.rest
+      if (this._answer != v)
+        this._incorrectQ.push(this._currentQ.concat(v))
+      this.update()
+    }
+    _setResult() {
+      correctCount.innerHTML = this._answerCount - this._incorrectQ.length
+      incorrectCount.innerHTML = this._incorrectQ.length
+
+      incorrectList.innerHTML = this._incorrectQ.reduce((a, v) =>
+        a + `${v[0]} ${this._qMaker.symbol} ${v[1]} = <span class='incorrect'>${v[3]}</span>→<span class='correct'>${v[2]}</span><br>`, "")
+      resultSeconds.innerHTML = this._timer?.getSeconds()
+      resultMinutes.innerHTML = this._timer?.getMinutes()
+
+      mainPage.style.display = ""
+      resultPage.style.display = "block"
+      // mainPage.style.backgroundColor = ""
+      // resultPage.style.backgroundColor = "transparent"
+    }
+    get _isStarted() { return 0 < this._qMaker.count }
+    get _isAnswered() { return this._qMaker.count <= this._answerCount }
+    get _isFinished() { return this.rest <= 0 }
+    update() {
+      if (!this._isStarted) return
+      if (!this._isAnswered) return
+      if (this._isFinished) {
+        this._timer?.stop()
+        this._setResult()
+      } else {
+        this._setQuestion()
+      }
+    }
+  }
+  class Timer {
+    constructor() {
+      this._intervalID = null
+      this._startTime = 0
+      this.time = 0
+    }
+    clear() {
+      if (this._intervalID) clearInterval(this._intervalID)
+      timerSeconds.innerHTML = timerMinutes.innerHTML = "00"
+    }
+    stop() {
+      if (this._intervalID) clearInterval(this._intervalID)
+      this._updateTime()
+    }
+    start() {
+      if (this._intervalID) return
+      this._startTime = Date.now()
+      this._intervalID = setInterval(() => this._updateTime(), 1000)
+    }
+    getSeconds() { return ('0' + Math.floor((this.time / 1000) % 60)).slice(-2) }
+    getMinutes() { return ('0' + Math.floor((this.time / 1000 / 60) % 60)).slice(-2) }
+    _updateTime() {
+      this.time = Date.now() - this._startTime
+      timerSeconds.innerHTML = this.getSeconds()
+      timerMinutes.innerHTML = this.getMinutes()
+    }
+  }
+  class App {
+    constructor() {
+      this._pageHistory = []
+      document.addEventListener("DOMContentLoaded", (e) => {
+        console.log('DOMContentLoaded')
+        this._pageHistory.push(window.location.href)
+        this.update()
+      })
+      window.addEventListener("popstate", (e) => {
+        //console.log("window:popstate")
+        let href = this._pageHistory.pop()
+        console.log("window:popstate: " + href)
+        this.update()
+      });
+      document.querySelectorAll('.returnButton').forEach((a) =>
+        a.addEventListener("click", (e) => {
+          console.log(".returnButton:click")
+          if (1 < this._pageHistory.length)
+            history.back()
+          else {
+            window.history.replaceState(null, null, window.location.pathname)
+            this.update()
+          }
+        }));
+      document.querySelectorAll('.retryButton').forEach((a) =>
+        a.addEventListener("click", (e) => {
+          console.log(".retryButton:click")
+          this._mainPage?.reset()
+        }));
+      let go = (url) => {
+        window.history.pushState(null, null, url)
+        this._pageHistory.push(window.location.href)
+        this.update();
+      }
+      goPageA1Q20.onclick = () => go("#A1Q20")
+      goPageA1Q50.onclick = () => go("#A1Q50")
+      goPageA1Q50O.onclick = () => go("#A1Q50O")
+      goPageS1Q20.onclick = () => go("#S1Q20")
+      goPageS1Q50.onclick = () => go("#S1Q50")
+      goPageS1Q50O.onclick = () => go("#S1Q50O")
+      goPageM1Q20.onclick = () => go("#M1Q20")
+      goPageM1Q50.onclick = () => go("#M1Q50")
+      goPageM1Q50O.onclick = () => go("#M1Q50O")
+      goPageD1Q20.onclick = () => go("#D1Q20")
+      goPageD1Q50.onclick = () => go("#D1Q50")
+      goPageD1Q50O.onclick = () => go("#D1Q50O")
+    }
+    _reset() {
+      this._mainPage?.clear()
+      topPage.style.display = "block"
+      //topPage.style.backgroundColor = "transparent"
+    }
+    update(args) {
+      let q = window.location.search
+      let h = window.location.hash
+      console.log(`updatePage: ${q} : ${h}`)
+      if (q || h) {
+        topPage.style.display = ""
+        //topPage.style.backgroundColor = ""
+        this._mainPage?.clear()
+        if (h == '#A1Q20') {
+          this._mainPage = new MainPage(new AddQuestionMaker(
+            "レベル1(2〜10を<ruby>使<rt>つか</rt>う</ruby>)</ruby>20<ruby>問<rt>もん</rt></ruby>",
+            2, 10, 20, false))
+        } else if (h == '#A1Q50') {
+          this._mainPage = new MainPage(new AddQuestionMaker(
+            "レベル1(2〜10を<ruby>使<rt>つか</rt>う</ruby>)</ruby>50<ruby>問<rt>もん</rt></ruby>",
+            2, 10, 50, false))
+        } else if (h == '#A1Q50O') {
+          this._mainPage = new MainPage(new AddQuestionMaker(
+            "レベル1(2〜10を<ruby>使<rt>つか</rt>う</ruby>)</ruby>50<ruby>問<rt>もん</rt></ruby>👹<ruby>鬼<rt>おに</rt></ruby>",
+            2, 10, 50, true))
+        } else if (h == '#S1Q20') {
+          this._mainPage = new MainPage(new SubQuestionMaker(
+            "レベル1(2〜10を<ruby>使<rt>つか</rt>う</ruby>)</ruby>20<ruby>問<rt>もん</rt></ruby>",
+            2, 10, 20, false))
+        } else if (h == '#S1Q50') {
+          this._mainPage = new MainPage(new SubQuestionMaker(
+            "レベル1(2〜10を<ruby>使<rt>つか</rt>う</ruby>)</ruby>50<ruby>問<rt>もん</rt></ruby>",
+            2, 10, 50, false))
+        } else if (h == '#S1Q50O') {
+          this._mainPage = new MainPage(new SubQuestionMaker(
+            "レベル1(2〜10を<ruby>使<rt>つか</rt>う</ruby>)</ruby>50<ruby>問<rt>もん</rt></ruby>👹<ruby>鬼<rt>おに</rt></ruby>",
+            2, 10, 50, true))
+        } else if (h == '#M1Q20') {
+          this._mainPage = new MainPage(new MulQuestionMaker(
+            "レベル1(2〜10を<ruby>使<rt>つか</rt>う</ruby>)</ruby>20<ruby>問<rt>もん</rt></ruby>",
+            2, 10, 20, false))
+        } else if (h == '#M1Q50') {
+          this._mainPage = new MainPage(new MulQuestionMaker(
+            "レベル1(2〜10を<ruby>使<rt>つか</rt>う</ruby>)</ruby>50<ruby>問<rt>もん</rt></ruby>",
+            2, 10, 50, false))
+        } else if (h == '#M1Q50O') {
+          this._mainPage = new MainPage(new MulQuestionMaker(
+            "レベル1(2〜10を<ruby>使<rt>つか</rt>う</ruby>)</ruby>50<ruby>問<rt>もん</rt></ruby>👹<ruby>鬼<rt>おに</rt></ruby>",
+            2, 10, 50, true))
+        } else if (h == '#D1Q20') {
+          this._mainPage = new MainPage(new DivQuestionMaker(
+            "レベル1(2〜10を<ruby>使<rt>つか</rt>う</ruby>)</ruby>20<ruby>問<rt>もん</rt></ruby>",
+            2, 10, 20, false))
+        } else if (h == '#D1Q50') {
+          this._mainPage = new MainPage(new DivQuestionMaker(
+            "レベル1(2〜10を<ruby>使<rt>つか</rt>う</ruby>)</ruby>50<ruby>問<rt>もん</rt></ruby>",
+            2, 10, 50, false))
+        } else if (h == '#D1Q50O') {
+          this._mainPage = new MainPage(new DivQuestionMaker(
+            "レベル1(2〜10を<ruby>使<rt>つか</rt>う</ruby>)</ruby>50<ruby>問<rt>もん</rt></ruby>👹<ruby>鬼<rt>おに</rt></ruby>",
+            2, 10, 50, true))
+        } else {
+          this._reset()
+        }
+      } else {
+        this._reset()
+      }
+    }
+  }
+  const app = new App
+
+  window.addEventListener("load", (e) => {
+    console.log('window:load')
+  })
+</script>
+
+</html>
