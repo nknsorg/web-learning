@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width,
+   initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no">
+  <style type="text/css">
+    @import url("https://fonts.googleapis.com/css?family=M+PLUS+Rounded+1c:700");
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      overflow: hidden;
+      /* Pull to Refresh 無効化 */
+      /* background: lightblue; */
+    }
+
+    body {
+      margin: 0 0;
+      height: 100vh;
+      /* Chrome等dvhに未対応のため */
+      height: 100dvh;
+      /* Pull to Refresh 無効化 */
+      overflow-y: auto;
+      /* Pull to Refresh 無効化 */
+      /* background: lightgoldenrodyellow; */
+    }
+
+    body,
+    input {
+      font-family: "M PLUS Rounded 1c", Meiryo, メイリオ, system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      color: teal;
+      text-align: center;
+    }
+
+    body>header {
+      height: 48px;
+      width: 100%;
+      min-width: 320px;
+
+      font-size: 20px;
+      padding: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      position: fixed;
+      z-index: 100;
+      backdrop-filter: saturate(180%) blur(20px);
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      background: rgba(240, 240, 240, 0.5);
+
+      & div {
+        min-width: 30px;
+      }
+    }
+
+    .body {
+      min-width: 320px;
+      max-width: 440px;
+      padding-top: 48px;
+      /* background: lightcyan; */
+      margin: 0 auto;
+    }
+
+    .page,
+    .top-page {
+      margin: 0 8px;
+    }
+
+    .page {
+      display: none;
+    }
+
+    .button {
+      background: RoyalBlue;
+      color: white;
+      padding: 1rem 1rem;
+      width: 100%;
+      border-radius: 4px;
+      font-weight: bold;
+      opacity: 0.9;
+      border: none;
+      -webkit-appearance: none;
+      appearance: none;
+
+      &:hover {
+        opacity: 0.8;
+      }
+
+      &:active {
+        opacity: 1;
+      }
+    }
+
+    a {
+      &:hover {
+        cursor: pointer;
+        color: #004040;
+      }
+    }
+
+    input {
+      padding: 16px 4px;
+      width: 100%;
+      border-radius: 8px;
+      font-weight: bold;
+      opacity: 0.9;
+      border: 3px solid RoyalBlue;
+      font-size: 1.5rem;
+    }
+
+    .question1 {
+      font-size: 62.5%;
+    }
+
+    .question1 span {
+      font-size: 5.4em;
+    }
+
+    .mr-2,
+    .mx-2 {
+      margin-right: 5px;
+      margin-left: 5px;
+    }
+
+    .question {
+      font-size: 4rem;
+    }
+
+    .timer {
+      font-size: 2rem;
+    }
+
+    .reset {
+      text-align: right;
+    }
+  </style>
+  <title>算数(さんすう)ゲーム</title>
+</head>
+</head>
+
+<body>
+  <header>
+    <div><a class="return"><ruby>◀<rt>もどる</rt></ruby></a></div>
+    <div>算数ゲーム</div>
+    <div><a class="retry">&#x1f504;</a></div>
+  </header>
+  <div class="body">
+    <div class="top-page" id="topPage">
+      <header><ruby>算数<rt>さんすう</rt>ゲーム</header>
+      <p><a onclick="goPage('#add-1')">▶ たしざん1</a></p>
+      <p><a onclick="location.href='#sub-p1'">▶ ひきざん1</a></p>
+      <p><a onclick="location.href='#mul-p1'">▶ かけざん1</a></p>
+      <p><a onclick="location.href='#div-p1'">▶ わりざん1</a></p>
+      -
+      <p><a href="#add-p1">▶ たしざん1</a></p>
+      <p><a href="#sub-p1">▶ ひきざん1</a></p>
+      <p><a href="#mul-p1">▶ かけざん1</a></p>
+      <p><a href="#div-p1">▶ わりざん1</a></p>
+      -
+      <p><a onclick="goPage('?add-p1')">▶ たしざん1</a></p>
+      <p><a onclick="location.href='?sub-p1'">▶ ひきざん1</a></p>
+      <p><a onclick="location.href='#mul-p1'">▶ かけざん1</a></p>
+      <p><a onclick="location.href='#div-p1'">▶ わりざん1</a></p>
+      <p><a onclick="location.assign('#result')">けっかはっぴょう</a></p>
+
+      <p><a href="">◀もどる</a></p>
+
+      <p><a onclick="location.href='#add-p1'">▶ たしざん1</a></p>
+      <p><a onclick="location.href='#sub-p1'">▶ ひきざん1</a></p>
+      <p><a onclick="location.href='#mul-p1'">▶ かけざん1</a></p>
+      <p><a onclick="location.href='#div-p1'">▶ わりざん1</a></p>
+
+      <p><a onclick="location.assign('#result')">けっかはっぴょう</a></p>
+    </div>
+    <div id="mainPage" class="page">
+      <header id="mainHeader">たしざん</header>
+      <div class="timer"><span id="timerMinutes">00</span>:<span id="timerSeconds">00</span></div>
+      <input type="number" id="answerInput" value="" placeholder="ここをタップしてスタート">
+      <div class="question">0 + 1</div>
+    </div>
+    <div id="add-p2" class="page">
+      <header>たしざん 2</header>
+      <div class="timer"><span id="timerSeconds_">00</span>:<span id="timerMinutes_">00</span></div>
+      <input type="number" id="answer" _value="p-calc-input" placeholder="ここをタップしてスタート">
+      <div class="question">0 + 1</div>
+      <div class="question1"><span>0</span><span class="mr-2">+</span><span>5</span></div>
+    </div>
+    <div id="resultPage" class="page">
+      <header><a onclick="location.replace('#')">Top ◀</a>さんすう トレーニング</header>
+      <p>けっかはっぴょう</p>
+      <div class="timer">00:00</div>
+      <input type="number" id="answer" _value="p-calc-input" placeholder="ここをタップしてスタート">
+      <div class="question">0 + 1</div>
+      <div class="question1"><span>0</span><span class="mr-2">+</span><span>5</span></div>
+    </div>
+    <script>
+      function preventDefault(e) { if (event.touches.length > 1) e.preventDefault() }
+      document.body.addEventListener("dblclick", preventDefault, { passive: false });
+      document.body.addEventListener("touchmove", preventDefault, { passive: false });
+      document.body.addEventListener("touchstart", preventDefault, { passive: false });
+
+      class Game {
+        constructor() {
+          this._reset();
+          this.state = 0;
+        }
+        _reset() {
+          this.state = 0;
+          if (this.intervalID) clearInterval(this.intervalID)
+          this.intervalID = null;
+          this.startTime = 0;
+          this.minutes = 0;
+          this.seconds = 0;
+        }
+        start() {
+          this.state = 1;
+          if (this.intervalID) return;
+          this.startTime = Date.now();
+          this.intervalID = setInterval(this.updateTime.bind(this), 1000);
+        }
+        updateTime() {
+          let t = Date.now() - this.startTime;
+          let sec = ('0' + Math.floor((t / 1000) % 60)).slice(-2);
+          let min = ('0' + Math.floor((t / 1000 / 60) % 60)).slice(-2);
+          timerSeconds.innerHTML = sec;
+          timerMinutes.innerHTML = min;
+        }
+        updatePage(args) {
+          let q = window.location.search;
+          let h = window.location.hash;
+          console.log("updatePage: " + q + ": " + h)
+          if (q || h) {
+            topPage.style.display = "none";
+            mainPage.style.display = "block";
+            mainHeader.textContent = "たしざん" + 1;
+          } else {
+            this._reset();
+            topPage.style.display = "block";
+            mainPage.style.display = "none";
+            resultPage.style.display = "none";
+          }
+        }
+      }
+      const game = new Game();
+      answerInput.onfocus = function (e) {
+        console.log("answerInput.onfocus");
+        game.start();
+      };
+      answerInput.onkeyup = function (e) {
+        console.log("answerInput.onkeyup");
+      };
+      document.querySelectorAll('.return').forEach(function (a) {
+        a.addEventListener("click", function (e) {
+          console.log(".return:click");
+          history.back();
+          // if (document.referrer) {
+          //   let url = window.location.origin + window.location.pathname;
+          //   if (url == document.referrer) {
+          //     window.history.go(-1);
+          //   } else {
+          //     window.history.replaceState(null, null, window.location.pathname);
+          //   }
+          // } else {
+          //   window.history.pushState(null, null, window.location.pathname);
+          // }
+          game.updatePage();
+        });
+      });
+      function goPage(url, t) {
+        console.log('goPage:');
+        window.history.pushState(null, null, url);
+        game.updatePage();
+      }
+      window.addEventListener("load", function () {
+        console.log('window:load');
+        game.updatePage();
+      });
+      window.addEventListener("popstate", function () {
+        console.log("window:popstate");
+        game.updatePage();
+      });
+    </script>
+  </div>
+</body>
+
+</html>
