@@ -284,21 +284,20 @@
     constructor(inMin1, inMax1) {
       this.min = inMin1
       this.max = inMax1
-      this._size = this.max - this.min + 1
-      this._keys = []
+      this._size1 = (this.max - this.min + 1) // 10 1 ->10
+      this._size = this._size1 ** 2 // 100
+      this._altKeys = {}
     }
     get size() { return this._size }
-    get count() { return this._keys.length }
     _keyToNum(inKey) {
-      let k1 = inKey % this._size
-      let n2 = (inKey - k1) / this._size + this.min
-      return [k1 + this.min, n2]
+      let k1 = inKey % this._size1 // 0~9
+      let k2 = (inKey - k1) / this._size1 // 0~9
+      return [k1 + this.min, k2 + this.min] // 1~10
     }
     getNext() {
-      let ss = this._size ** 2 - this.count
-      let key = Math.floor(Math.random() * ss)
-      key += this._keys.filter((v) => v <= key).length
-      this._keys.push(key)
+      let key = Math.floor(Math.random() * this._size) // 0~99
+      if (key in this._altKeys) key = this._altKeys[key]
+      this._altKeys[key] = this._size--
       return this._keyToNum(key)
     }
   }
@@ -307,13 +306,12 @@
       this.symbol = "+"
       this.title = "<ruby>足<rt>た</rt>し</ruby><ruby>算<rt>ざん</rt>" + inTitle
       this._maker = new PairNumberMaker(inMin, inMax)
-      this.size = Math.min(inSize, this._maker.size ** 2)
+      this.size = Math.min(inSize, this._maker.size)
       this.isFadeOut = inIsFadeOut;
     }
     reset() {
       this._maker = new PairNumberMaker(this._maker.min, this._maker.max)
     }
-    get count() { return this._maker.count }
     getNext() {
       let n = this._maker.getNext()
       return n.concat(n[0] + n[1])
@@ -324,13 +322,12 @@
       this.symbol = "-"
       this.title = "<ruby>引<rt>ひ</rt>き</ruby><ruby>算<rt>ざん</rt></ruby>" + inTitle
       this._maker = new PairNumberMaker(inMin, inMax)
-      this.size = Math.min(inSize, this._maker.size ** 2)
+      this.size = Math.min(inSize, this._maker.size)
       this.isFadeOut = inIsFadeOut;
     }
     reset() {
       this._maker = new PairNumberMaker(this._maker.min, this._maker.max)
     }
-    get count() { return this._maker.count }
     getNext() {
       let n = this._maker.getNext()
       return [n[0] + n[1]].concat(n)
@@ -341,13 +338,12 @@
       this.symbol = "×"
       this.title = "<ruby>掛<rt>か</rt>け</ruby><ruby>算<rt>ざん</rt></ruby>" + inTitle
       this._maker = new PairNumberMaker(inMin, inMax)
-      this.size = Math.min(inSize, this._maker.size ** 2)
+      this.size = Math.min(inSize, this._maker.size)
       this.isFadeOut = inIsFadeOut;
     }
     reset() {
       this._maker = new PairNumberMaker(this._maker.min, this._maker.max)
     }
-    get count() { return this._maker.count }
     getNext() {
       let n = this._maker.getNext()
       return n.concat(n[0] * n[1])
@@ -358,13 +354,12 @@
       this.symbol = "÷"
       this.title = "<ruby>割<rt>わ</rt>り</ruby><ruby>算<rt>ざん</rt></ruby>" + inTitle
       this._maker = new PairNumberMaker(inMin, inMax)
-      this.size = Math.min(inSize, this._maker.size ** 2)
+      this.size = Math.min(inSize, this._maker.size)
       this.isFadeOut = inIsFadeOut;
     }
     reset() {
       this._maker = new PairNumberMaker(this._maker.min, this._maker.max)
     }
-    get count() { return this._maker.count }
     getNext() {
       let n = this._maker.getNext()
       return [n[0] * n[1]].concat(n)
@@ -389,6 +384,8 @@
     }
     _constructor() {
       questionSymbol.innerHTML = this._qMaker.symbol
+      this._isStarted = false
+      this._isAnswered = false
       this._answerCount = 0
       this._incorrectQ = []
       this.restCount = this.rest
@@ -416,7 +413,8 @@
       // resultPage.style.backgroundColor = ""
     }
     start() {
-      if (this._isStarted) return;
+      if (this._isStarted) return
+      this._isStarted = true
       questionText.style.visibility = ""
       answerInput._placeholder = answerInput.placeholder
       answerInput.placeholder = ""
@@ -437,8 +435,9 @@
       questionText.style.visibility = ""
     }
     _setQuestion() {
-      if (this._qMaker.isFadeOut) this._setFadeOut();
+      if (this._qMaker.isFadeOut) this._setFadeOut()
       let [left, right] = this._currentQ = this._qMaker.getNext()
+      this._isAnswered = false
       questionLeft.innerHTML = left
       questionRight.innerHTML = right
     }
@@ -448,6 +447,7 @@
       let v = answerInput.value
       if (v.length < String(this._answer).length) return
       answerInput.value = ''
+      this._isAnswered = true
       this._answerCount++
       this.restCount = this.rest
       if (this._answer != v)
@@ -468,11 +468,8 @@
       // mainPage.style.backgroundColor = ""
       // resultPage.style.backgroundColor = "transparent"
     }
-    get _isStarted() { return 0 < this._qMaker.count }
-    get _isAnswered() { return this._qMaker.count <= this._answerCount }
     get _isFinished() { return this.rest <= 0 }
     update() {
-      if (!this._isStarted) return
       if (!this._isAnswered) return
       if (this._isFinished) {
         this._timer?.stop()
