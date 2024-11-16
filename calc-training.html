@@ -295,9 +295,9 @@
       return [k1 + this.min, k2 + this.min] // 1~10
     }
     getNext() {
-      let key = Math.floor(Math.random() * this._size) // 0~99
-      if (key in this._altKeys) key = this._altKeys[key]
-      this._altKeys[key] = this._size--
+      let k = Math.floor(Math.random() * this._size--) // 0~99
+      let key = this._altKeys[k] ?? k
+      this._altKeys[k] = this._altKeys[this._size] ?? this._size
       return this._keyToNum(key)
     }
   }
