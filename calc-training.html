@@ -220,7 +220,7 @@
       </p>
       <p>
       <details>
-        <summary><ruby>割<rt>わ</rt>り</ruby><ruby>算<rt>ざん</rt></ruby>レベル1(2〜10を<ruby>使<rt>つか</rt>う</ruby>)</summary>
+        <summary><ruby>割<rt>わ</rt>り</ruby><ruby>算<rt>ざん</rt></ruby>レベル1(7〜20を<ruby>使<rt>つか</rt>う</ruby>)</summary>
         <div class="flex-w70">
           <div><a id="goPageD1Q20">▶20<ruby>問<rt>もん</rt></ruby></a></div>
           <div><a id="goPageD1Q50">▶50<ruby>問<rt>もん</rt></ruby></a></div>
@@ -350,7 +350,7 @@
     }
   }
   class DivQuestionMaker {
-    constructor(inTitle, inMin = 2, inMax = 20, inSize = 20, inIsFadeOut = true) {
+    constructor(inTitle, inMin = 2, inMax = 10, inSize = 20, inIsFadeOut = true) {
       this.symbol = "÷"
       this.title = "<ruby>割<rt>わ</rt>り</ruby><ruby>算<rt>ざん</rt></ruby>" + inTitle
       this._maker = new PairNumberMaker(inMin, inMax)
@@ -604,16 +604,16 @@
             2, 10, 50, true))
         } else if (h == '#D1Q20') {
           this._mainPage = new MainPage(new DivQuestionMaker(
-            "レベル1(2〜10を<ruby>使<rt>つか</rt>う</ruby>)</ruby>20<ruby>問<rt>もん</rt></ruby>",
-            2, 10, 20, false))
+            "レベル1(7〜20を<ruby>使<rt>つか</rt>う</ruby>)</ruby>20<ruby>問<rt>もん</rt></ruby>",
+            7, 20, 20, false))
         } else if (h == '#D1Q50') {
           this._mainPage = new MainPage(new DivQuestionMaker(
-            "レベル1(2〜10を<ruby>使<rt>つか</rt>う</ruby>)</ruby>50<ruby>問<rt>もん</rt></ruby>",
-            2, 10, 50, false))
+            "レベル1(7〜20を<ruby>使<rt>つか</rt>う</ruby>)</ruby>50<ruby>問<rt>もん</rt></ruby>",
+            7, 20, 50, false))
         } else if (h == '#D1Q50O') {
           this._mainPage = new MainPage(new DivQuestionMaker(
-            "レベル1(2〜20を<ruby>使<rt>つか</rt>う</ruby>)</ruby>50<ruby>問<rt>もん</rt></ruby>👹<ruby>鬼<rt>おに</rt></ruby>",
-            2, 20, 50, true))
+            "レベル1(7〜20を<ruby>使<rt>つか</rt>う</ruby>)</ruby>50<ruby>問<rt>もん</rt></ruby>👹<ruby>鬼<rt>おに</rt></ruby>",
+            7, 20, 50, true))
         } else {
           this._reset()
         }
