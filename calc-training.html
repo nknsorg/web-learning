@@ -350,7 +350,7 @@
     }
   }
   class DivQuestionMaker {
-    constructor(inTitle, inMin = 2, inMax = 10, inSize = 20, inIsFadeOut = true) {
+    constructor(inTitle, inMin = 2, inMax = 20, inSize = 20, inIsFadeOut = true) {
       this.symbol = "÷"
       this.title = "<ruby>割<rt>わ</rt>り</ruby><ruby>算<rt>ざん</rt></ruby>" + inTitle
       this._maker = new PairNumberMaker(inMin, inMax)
@@ -612,8 +612,8 @@
             2, 10, 50, false))
         } else if (h == '#D1Q50O') {
           this._mainPage = new MainPage(new DivQuestionMaker(
-            "レベル1(2〜10を<ruby>使<rt>つか</rt>う</ruby>)</ruby>50<ruby>問<rt>もん</rt></ruby>👹<ruby>鬼<rt>おに</rt></ruby>",
-            2, 10, 50, true))
+            "レベル1(2〜20を<ruby>使<rt>つか</rt>う</ruby>)</ruby>50<ruby>問<rt>もん</rt></ruby>👹<ruby>鬼<rt>おに</rt></ruby>",
+            2, 20, 50, true))
         } else {
           this._reset()
         }
